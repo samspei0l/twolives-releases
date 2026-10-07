@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TwoLives: personal &amp; professional to-dos</title>
+  <meta name="description" content="TwoLives keeps your personal and professional to-dos apart, syncs them across your phones, shares tasks with people you trust, and locks them with your fingerprint, face, PIN or password.">
+  <meta property="og:title" content="TwoLives: personal & professional to-dos">
+  <meta property="og:description" content="Two lives, one private app. Synced, shareable, locked with your fingerprint or face.">
+  <meta property="og:image" content="assets/icon.png">
+  <meta name="theme-color" content="#7C4DFF">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --coral: #FF6B4A;
+      --magenta: #C2459B;
+      --indigo: #4F46E5;
+      --violet: #7C4DFF;
+      --grad: linear-gradient(135deg, var(--coral), var(--magenta) 50%, var(--indigo));
+      --bg: #FBF9FE;
+      --surface: #FFFFFF;
+      --surface-2: #F3EFFA;
+      --text: #1B1530;
+      --muted: #5E5873;
+      --line: #E6E0F0;
+      --shadow: 0 24px 60px -24px rgba(76, 46, 160, .35);
+      --radius: 22px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0F0C19;
+        --surface: #191427;
+        --surface-2: #221B35;
+        --text: #F2EEFB;
+        --muted: #A9A2BD;
+        --line: #2C2441;
+        --shadow: 0 24px 60px -24px rgba(0, 0, 0, .7);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    .wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: saturate(160%) blur(14px);
+      background: color-mix(in srgb, var(--bg) 78%, transparent);
+      border-bottom: 1px solid var(--line);
+    }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 19px; text-decoration: none; }
+    .brand img { width: 34px; height: 34px; border-radius: 9px; }
+    .nav-links { display: flex; gap: 22px; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: 15px; }
+    .nav-links a:hover { color: var(--text); }
+    @media (max-width: 720px) { .nav-links a:not(.btn) { display: none; } }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 22px; border-radius: 14px; border: 0;
+      font: inherit; font-weight: 700; font-size: 16px;
+      text-decoration: none; cursor: pointer;
+      background: var(--grad); color: #fff !important;
+      box-shadow: 0 10px 30px -10px rgba(124, 77, 255, .6);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 14px 34px -10px rgba(124, 77, 255, .75); }
+    .btn.small { padding: 9px 16px; font-size: 14px; border-radius: 11px; }
+    .btn.ghost { background: var(--surface); color: var(--text) !important; border: 1px solid var(--line); box-shadow: none; }
+    .btn svg { width: 20px; height: 20px; }
+
+    /* Hero */
+    .hero { position: relative; overflow: hidden; padding: 72px 0 40px; }
+    .hero::before {
+      content: ""; position: absolute; inset: -40% -20% auto;
+      height: 640px; background: radial-gradient(closest-side, rgba(255,107,74,.22), transparent),
+        radial-gradient(closest-side at 70% 50%, rgba(79,70,229,.22), transparent);
+      filter: blur(20px); z-index: -1;
+    }
+    .hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+    @media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; text-align: center; } }
+    .eyebrow {
+      display: inline-flex; gap: 8px; align-items: center;
+      padding: 6px 12px; border-radius: 999px;
+      background: var(--surface-2); color: var(--violet);
+      font-weight: 700; font-size: 13px; letter-spacing: .02em;
+    }
+    h1 { font-size: clamp(38px, 6vw, 64px); line-height: 1.05; letter-spacing: -0.03em; margin: 18px 0 18px; }
+    .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 34em; margin: 0 0 28px; }
+    @media (max-width: 900px) { .lead { margin-inline: auto; } }
+    .cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    @media (max-width: 900px) { .cta { justify-content: center; } }
+    .meta { margin-top: 14px; font-size: 14px; color: var(--muted); }
+
+    .phones { position: relative; height: 560px; }
+    @media (max-width: 900px) { .phones { height: 480px; max-width: 460px; margin: 0 auto; width: 100%; } }
+    .phone {
+      position: absolute; width: 250px; aspect-ratio: 1080 / 2400;
+      border-radius: 36px; padding: 9px; background: #121018;
+      box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,.06) inset;
+    }
+    .phone img { width: 100%; height: 100%; object-fit: cover; border-radius: 28px; }
+    .phone.p1 { left: 8%; top: 30px; transform: rotate(-7deg); z-index: 1; }
+    .phone.p2 { right: 6%; top: 0; transform: rotate(5deg); z-index: 2; }
+    @media (max-width: 900px) { .phone { width: 200px; } .phone.p1 { left: 4%; } .phone.p2 { right: 4%; } }
+
+    /* Sections */
+    section { padding: 80px 0; }
+    .section-head { text-align: center; max-width: 680px; margin: 0 auto 44px; }
+    h2 { font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 12px; }
+    .section-head p { color: var(--muted); font-size: 18px; margin: 0; }
+
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .features { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 26px;
+    }
+    .icon {
+      width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center;
+      background: var(--grad); color: #fff; margin-bottom: 16px;
+    }
+    .icon svg { width: 24px; height: 24px; }
+    .card h3 { margin: 0 0 6px; font-size: 19px; }
+    .card p { margin: 0; color: var(--muted); }
+
+    /* Two lives split */
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    @media (max-width: 760px) { .split { grid-template-columns: 1fr; } }
+    .life { border-radius: 28px; padding: 32px; color: #fff; min-height: 230px; position: relative; overflow: hidden; }
+    .life.personal { background: linear-gradient(135deg, #FF6B4A, #B5321C); }
+    .life.work { background: linear-gradient(135deg, #5B52F0, #24178F); }
+    .life h3 { font-size: 28px; margin: 0 0 6px; }
+    .life p { opacity: .9; margin: 0; max-width: 26em; }
+    .life .pill { display: inline-block; margin-top: 18px; margin-right: 6px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.18); font-weight: 700; font-size: 13px; }
+
+    /* Gallery */
+    .gallery { display: flex; gap: 18px; overflow-x: auto; padding: 8px 4px 24px; scroll-snap-type: x mandatory; }
+    .gallery figure { margin: 0; flex: 0 0 220px; scroll-snap-align: center; text-align: center; }
+    .gallery .phone { position: relative; width: 220px; transform: none; }
+    .gallery figcaption { margin-top: 12px; font-weight: 600; color: var(--muted); font-size: 14px; }
+
+    /* Steps */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: step; }
+    @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+    .step { position: relative; padding-top: 58px; }
+    .step::before {
+      counter-increment: step; content: counter(step);
+      position: absolute; top: 22px; left: 26px; width: 30px; height: 30px; border-radius: 50%;
+      display: grid; place-items: center; font-weight: 800; color: #fff; background: var(--grad);
+    }
+
+    /* Download */
+    .download { text-align: center; }
+    .download .card { max-width: 760px; margin: 0 auto; padding: 40px 28px; }
+    .notes { text-align: left; max-width: 520px; margin: 24px auto 0; padding: 0; list-style: none; }
+    .notes li { position: relative; padding-left: 26px; margin: 8px 0; }
+    .notes li.heading { padding-left: 0; font-weight: 700; }
+    .notes li.heading::before { display: none; }
+    .notes li::before { content: ""; position: absolute; left: 6px; top: .62em; width: 8px; height: 8px; border-radius: 50%; background: var(--grad); }
+    .install { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; text-align: left; margin-top: 30px; }
+    @media (max-width: 680px) { .install { grid-template-columns: 1fr; } }
+    .install div { background: var(--surface-2); border-radius: 16px; padding: 16px; font-size: 15px; }
+    .install b { display: block; margin-bottom: 4px; }
+    code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 12.5px; word-break: break-all; color: var(--muted); }
+
+    /* FAQ */
+    .faq { max-width: 760px; margin: 0 auto; }
+    details { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px 22px; margin-bottom: 12px; }
+    summary { font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; font-size: 22px; line-height: 1; color: var(--violet); }
+    details[open] summary::after { content: "–"; }
+    details p { color: var(--muted); margin: 10px 0 0; }
+
+    footer { padding: 40px 0 56px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="#"><img src="assets/icon.png" alt="">TwoLives</a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#sharing">Sharing</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn small" href="#download">Download</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">For Android · Free</span>
+        <h1>Two lives.<br><span class="grad-text">One private to-do app.</span></h1>
+        <p class="lead">Keep your personal and professional tasks apart, get reminders on every phone, share tasks with the people you trust, and lock it all behind your fingerprint or face.</p>
+        <div class="cta">
+          <a class="btn" href="#download" data-apk>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14"/></svg>
+            Download for Android
+          </a>
+          <a class="btn ghost" href="#features">See what it does</a>
+        </div>
+        <div class="meta" data-meta>Android 7.0 or newer</div>
+      </div>
+      <div class="phones" aria-hidden="true">
+        <div class="phone p1"><img src="assets/screens/personal.png" alt=""></div>
+        <div class="phone p2"><img src="assets/screens/home.png" alt=""></div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap split">
+      <div class="life personal">
+        <h3>Personal</h3>
+        <p>Home, health, family and everything you. Birthdays, bills and the cake you promised to pick up.</p>
+        <span class="pill">3 to do</span><span class="pill">1 due today</span>
+      </div>
+      <div class="life work">
+        <h3>Professional</h3>
+        <p>Work, projects, meetings and career. Kept separate, so a Saturday doesn't fill up with Monday.</p>
+        <span class="pill">5 to do</span><span class="pill">✓ 2 done today</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Everything a to-do app should be. Nothing it shouldn't.</h2>
+        <p>Every time you open it, TwoLives asks which life you're focusing on, then gets out of your way.</p>
+      </div>
+      <div class="features">
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11c0 3-1 6-3 8M8 6.5A6 6 0 0 1 18 11c0 2-.3 4-1 6M6 10a6 6 0 0 1 .5-2.5M4 15c.6-1.2 1-2.6 1-4M15 21c.5-1.4.8-3 1-4.5M12 11a1 1 0 0 0-1 1"/></svg></div>
+          <h3>Locked tight</h3>
+          <p>Unlock with your fingerprint or face, or a 4–8 digit PIN or password. It re-locks itself when you step away.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0-1.4-8.8A6 6 0 0 0 4.5 12a4 4 0 0 0 1 7.9"/><path d="M9 15l3 3 3-3M12 18v-7"/></svg></div>
+          <h3>Synced everywhere</h3>
+          <p>Sign in with Google or email and your tasks follow you to every phone. They work offline too.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17.5" cy="9.5" r="2.5"/><path d="M16 14.6A5 5 0 0 1 21.5 19"/></svg></div>
+          <h3>Share with people</h3>
+          <p>Connect by scanning a QR code, then share a task. Either of you can tick it off, and you'll both know.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></div>
+          <h3>Never miss a due date</h3>
+          <p>Get an alert at the due time or up to a day before, on every phone you're signed in on, even after a restart.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></div>
+          <h3>See what you got done</h3>
+          <p>Finished tasks move to Done, grouped by day. Swipe to complete or delete, and undo if you change your mind.</p>
+        </div>
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></div>
+          <h3>Updates built in</h3>
+          <p>TwoLives tells you when a new version is out, shows what changed, and installs it in a tap. Your tasks stay put.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sharing" style="background: var(--surface-2);">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Share a task in three steps</h2>
+        <p>Plan the offsite with a colleague, or split the shopping with your partner. Only people you've connected with can share with you.</p>
+      </div>
+      <div class="steps">
+        <div class="card step"><h3>Show your code</h3><p>Open Connections to see your personal QR code and share code.</p></div>
+        <div class="card step"><h3>They scan it</h3><p>The other person scans your QR in TwoLives (or types the code), and you accept their request.</p></div>
+        <div class="card step"><h3>Share any task</h3><p>Pick them under "Share with". The task shows up on their phone, with its reminder.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Take a look</h2>
+      </div>
+      <div class="gallery">
+        <figure><div class="phone"><img src="assets/screens/home.png" alt="Choose Personal or Professional" loading="lazy"></div><figcaption>Pick a life</figcaption></figure>
+        <figure><div class="phone"><img src="assets/screens/personal.png" alt="Personal tasks, some shared" loading="lazy"></div><figcaption>Tasks, shared or not</figcaption></figure>
+        <figure><div class="phone"><img src="assets/screens/editor.png" alt="Task editor with sharing" loading="lazy"></div><figcaption>Due dates, alerts &amp; sharing</figcaption></figure>
+        <figure><div class="phone"><img src="assets/screens/connections.png" alt="Share code and QR" loading="lazy"></div><figcaption>Connect by QR</figcaption></figure>
+        <figure><div class="phone"><img src="assets/screens/pin.png" alt="Create a PIN or password" loading="lazy"></div><figcaption>PIN or password</figcaption></figure>
+        <figure><div class="phone"><img src="assets/screens/update.png" alt="In-app update" loading="lazy"></div><figcaption>One-tap updates</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="download" class="download">
+    <div class="wrap">
+      <div class="card">
+        <h2>Get TwoLives</h2>
+        <p class="lead" style="margin: 0 auto 24px;" data-version>The latest version for Android 7.0 and newer.</p>
+        <a class="btn" href="https://github.com/samspei0l/twolives-releases/releases/latest" data-apk>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14"/></svg>
+          <span data-apk-label>Download the APK</span>
+        </a>
+        <ul class="notes" data-notes hidden></ul>
+        <div class="install">
+          <div><b>1. Download</b>Open this page on your Android phone and tap Download.</div>
+          <div><b>2. Install</b>Open the file. If Android asks, allow your browser to install apps.</div>
+          <div><b>3. Sign in</b>Sign in with Google or email, then set your PIN or password.</div>
+        </div>
+        <p style="color: var(--muted); font-size: 14px; margin: 26px 0 0;">
+          Every version is signed with the same TwoLives key, so updates install over the top and keep your data.<br>
+          Certificate SHA-256: <code>7A:AB:31:AF:28:C7:66:5B:A4:4E:C8:2C:B5:7B:90:59:8A:2A:6F:EA:7D:8F:AB:12:01:5A:BF:FD:C2:44:28:86</code>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap faq">
+      <div class="section-head"><h2>Questions</h2></div>
+      <details><summary>Is TwoLives free?</summary><p>Yes. There are no ads, subscriptions or in-app purchases.</p></details>
+      <details><summary>Why isn't it on the Google Play Store?</summary><p>Not yet. For now you install it from this page. Android will warn that it comes from outside the Play Store. That's normal for any app installed this way.</p></details>
+      <details><summary>Who can see my tasks?</summary><p>Only you, plus the people you choose to share a specific task with. Tasks are stored in your own account on Google Firebase (Sydney region), protected by security rules that only let you and those people read them. There's no tracking.</p></details>
+      <details><summary>What if I forget my PIN or password?</summary><p>Your tasks are safe in your account. Sign out from the unlock screen, sign back in with Google or email, and set a new PIN or password.</p></details>
+      <details><summary>How do updates work?</summary><p>TwoLives checks for new versions and shows you what's changed. Tap "Update now" and it downloads and opens the installer. You can also check any time in Settings → Check for updates.</p></details>
+      <details><summary>Does it work on iPhone?</summary><p>Not yet. TwoLives is Android-only for now.</p></details>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <a class="brand" href="#"><img src="assets/icon.png" alt="">TwoLives</a>
+      <span data-footer-version>TwoLives for Android</span>
+    </div>
+  </footer>
+
+  <script>
+    // version.json is written on each release; the app reads it too.
+    fetch('version.json', { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((v) => {
+        const mb = v.size ? ` · ${Math.round(v.size / 1048576)} MB` : '';
+        document.querySelectorAll('[data-apk]').forEach((a) => (a.href = v.apk));
+        document.querySelectorAll('[data-apk-label]').forEach((s) => (s.textContent = `Download TwoLives ${v.version}`));
+        document.querySelector('[data-meta]').textContent = `Version ${v.version}${mb} · Android 7.0 or newer`;
+        document.querySelector('[data-version]').textContent = `Version ${v.version}, released ${new Date(v.released).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}.`;
+        document.querySelector('[data-footer-version]').textContent = `TwoLives ${v.version} for Android`;
+        const notes = document.querySelector('[data-notes]');
+        if (v.notes && v.notes.length) {
+          const head = document.createElement('li');
+          head.className = 'heading';
+          head.textContent = "What's new";
+          notes.appendChild(head);
+          v.notes.forEach((n) => {
+            const li = document.createElement('li');
+            li.textContent = n;
+            notes.appendChild(li);
+          });
+          notes.hidden = false;
+        }
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>

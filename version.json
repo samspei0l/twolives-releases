@@ -1,0 +1,15 @@
+{
+  "version": "1.2.0",
+  "build": 3,
+  "released": "2026-10-07",
+  "apk": "https://github.com/samspei0l/twolives-releases/releases/download/v1.2.0/TwoLives-v1.2.0.apk",
+  "size": 62356624,
+  "sha256": "e1634969ced88bcb0430cd38abade800e25d9d8dbfb4e23e8b5cdde921d5ec33",
+  "notes": [
+    "Share tasks with people you trust: connect by scanning their QR code or typing their share code",
+    "Shared tasks show who they're from and who completed them, with reminders on everyone's phone",
+    "Lock TwoLives with a 4–8 digit PIN or an alphanumeric password",
+    "Updates now download and install from inside the app (Settings → Check for updates)",
+    "Smaller fixes: clearer PIN entry and quieter Undo messages"
+  ]
+}
